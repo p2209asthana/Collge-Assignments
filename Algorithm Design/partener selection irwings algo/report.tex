@@ -1,0 +1,35 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,algorithm,algorithmic}
+\usepackage{fullpage}
+\usepackage{graphicx}
+\begin{document}
+%\begin{center}
+\title{Assignment$\#$2}\maketitle
+%\end{center}
+\vspace*{190px}
+\begin{flushleft}
+\textbf{Submitted By:}\\
+Prakhar Asthana\\
+(2011cs1027)\\
+Deptt. of Computer Science and Engineering\\
+Indian Institute of Technology Ropar\\
+
+Prateek Singh\\
+(2011cs1028)\\
+Deptt. of Computer Science and Engineering\\
+Indian Institute of Technology Ropar
+\end{flushleft}
+\pagebreak
+\textbf{Problem Statement:} We are given a .csv file containg the preference list of 40 students.  The objective is to make stable pairs based on their preferences. A pair $(a,b)$ is said to be stable if both $a$ and $b$ has no other better partner available.This problem statement is exactly same as STABLE ROOMMATE PROBLEM which was first discussed by Gale and Shapley in 1962. Its O($n^2$) solution was provided by Irving et. al in 1985.We used their algorithm to solve this problem\\\\
+\textbf{Procedure:} We parsed .csv file into a 2-D Matrix using $csv$ package available with Python. Irving's Algorithm has two phases. In phase 1,participants propose to each person in order of their preference list.If a participant is not proposed by anyone at some stage and then he recives a proposal, he holds that proposal . Participants move to next proposal if and only if their current proposal is rejected. A participant rejects a proposal if he is currently holding a proposal from other person having higher preference than the proposee. But if the proposee has higher preference, then the participant holds his proposal and rejects his previous proposal. If the pairs obtained from phase 1 are not stable, we move to phase 2 of Irving's algorithm
+\\\\
+\textbf{Observation:} After the phase 1, all the pairs obtained were stable, so we need not move to phase 2.\\
+Except the 4 pairs mentioned below all the pairs obtained by algorithm were concurrent with the pairs actually formed\\
+\textbf{Pairs Actually Formed}\\
+1. 2011cs1018-2011cs1015\\2. 2011cs1016-2011cs1005\\3. P2009cs1010-P2008cs1034\\4. 2011cs1007-2011cs1017\\
+\textbf{Pairs Proposed by Algorithm}\\
+1. 2011cs1018-2011cs1016\\2. P2009cs1010-2011cs1005\\3. 2011cs1007-P2008cs1034\\4. 2011cs1015-2011cs1017\\\\
+\textbf{Reference:}\\
+1. Irving, Robert W. "An efficient algorithm for the “stable roommates” problem." Journal of Algorithms 6.4 (1985): 577-595.1
+
+\end{document}

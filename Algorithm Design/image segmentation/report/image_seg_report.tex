@@ -1,0 +1,122 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Journal Article
+% LaTeX Template
+% Version 1.3 (9/9/13)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Frits Wenneker (http://www.howtotex.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[twoside]{article}
+
+\usepackage{lipsum} % Package to generate dummy text throughout this template
+
+\usepackage[sc]{mathpazo} % Use the Palatino font
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\linespread{1.05} % Line spacing - Palatino needs more space between lines
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+
+\usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry} % Document margins
+\usepackage{multicol} % Used for the two-column layout of the document
+\usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats in tables or figures
+\usepackage{booktabs} % Horizontal rules in tables
+\usepackage{float} % Required for tables and figures in the multi-column environment - they need to be placed in specific locations with the [H] (e.g. \begin{table}[H])
+\usepackage{hyperref} % For hyperlinks in the PDF
+
+\usepackage{lettrine} % The lettrine is the first enlarged letter at the beginning of the text
+\usepackage{paralist} % Used for the compactitem environment which makes bullet points with less space between them
+
+\usepackage{abstract} % Allows abstract customization
+\renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
+\renewcommand{\abstracttextfont}{\normalfont\small\itshape} % Set the abstract itself to small italic text
+
+\usepackage{titlesec} % Allows customization of titles
+\renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
+\renewcommand\thesubsection{\Roman{subsection}} % Roman numerals for subsections
+\titleformat{\section}[block]{\large\scshape\centering}{\thesection.}{1em}{} % Change the look of the section titles
+\titleformat{\subsection}[block]{\large}{\thesubsection.}{1em}{} % Change the look of the section titles
+
+\usepackage{fancyhdr} % Headers and footers
+\pagestyle{fancy} % All pages have headers and footers
+\fancyhead{} % Blank out the default header
+\fancyfoot{} % Blank out the default footer
+\fancyhead[C]{} % Custom header text
+\fancyfoot[RO,LE]{\thepage} % Custom footer text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\title{\vspace{-15mm}\fontsize{24pt}{10pt}\selectfont\textbf{Image Segmentation}} % Article title
+
+\author{
+\large
+\textsc{Prakhar Asthana}\\[2mm] % Your name
+\normalsize Indian Institute of Technology Ropar \\ % Your institution
+\normalsize \href{mailto:prakharas@iitrpr.ac.in}{prakharas@iitrpr.ac.in} % Your email address
+\vspace{1mm}
+}
+\date{30/11/2013}
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle % Insert title
+
+\thispagestyle{fancy} % All pages have headers and footers
+
+%----------------------------------------------------------------------------------------
+%	ABSTRACT
+%----------------------------------------------------------------------------------------
+
+\begin{abstract}
+\noindent 
+Image segmentation problem asks us to classify all pixels in a general image into two groups: Pixels which belong to the background and the pixels which belong to the foreground, given the \textbf{tendency} of each pixel to go into foreground and background. We define 2- pixels as neighbours if they are in \textbf{4- Neighbourhood} connectivity of each other. Decission of a pixel whether to go into foreground or background is also dependent on the neighbour pixels since neighbouring pixels are more likely to go into the same category. So for each pair of neighbour pixels, we have a \textbf{penalty} such that if they are put in separate groups, penalty is paid. So, the aim of the image segmentaion problem is to divide set of pixels into 2 groups such that maximum number of tendencies are met while incurring minimum penalty. 
+\end{abstract}
+
+%----------------------------------------------------------------------------------------
+%	ARTICLE CONTENTS
+%----------------------------------------------------------------------------------------
+
+%\begin{multicols}{1} % Two-column layout throughout the main article tex
+
+\section{Problem Statement}
+Let $S$ be the set of all pixels. Then the image segmentation problem can be formally stated us under:\\
+\textbf{Input:}\\
+1. Two values $a_i \geq 0$ and $b_i \geq 0$, $\forall i \in S$ indicating forward and backward tendencies respectively.\\ 
+2. Penalty $p_{ij} \geq 0$ $\forall i,j \in S$ s.t. $i$ and $j$ are neighbours.\\
+\textbf{Output:} Sets $A$ and $B$ s.t. $A \cup B = S$ and $A\cap B = \phi$.\\
+\textbf{Goal:} To maximize $q(A,B)= \sum \limits _{i\in A}a_i+\sum \limits_{j\in B}b_j- \sum \limits_{i \in A, j\in B}p_{ij}$.\\\\
+Since $q(A,B)=Q - q^{'}(A,B)$\\
+where $Q= \sum \limits_{i\in S}(a_i+b_i)$\\ and $ q^{'}(A,B)=\sum \limits_{i\in A}b_i + \sum \limits_{j\in B} a_j + \sum \limits_{i \in A, j\in B}p_{ij}$\\
+Since $Q$ is a constant, goal can be rewritten as:\\
+\textbf{Goal:} To minimize $ q^{'}(A,B)=\sum \limits_{i\in A}b_i + \sum \limits_{j\in B} a_j + \sum \limits_{i \in A, j\in B}p_{ij}$
+%------------------------------------------------
+
+\section{Conversion to Minimum-Cut Problem}
+Image segmentation problem can be polynomially converted to minimum-cut problem.For that we need to make a directed graph $G^{'}=(V^{'},E^{'})$ as under:\\\\
+$V^{'}=s \cup V \cup t $, $V=\lbrace v_i , \forall i \in S \rbrace$\\
+$E^{'}= E_s \cup E \cup E_t $ where\\\\
+$E_s=\lbrace (s,j) , \forall j \in B \rbrace$,\hspace*{158px} $w((s,j))= a_j$\\
+$E=\lbrace (i,j), \forall i \in A , j\in B $ s.t. $ i $ and $ j $ are neighbours$ \rbrace$,\hspace*{20px}$w((i,j))= p_{ij}$\\
+$E_t=\lbrace (i,t) , \forall i \in A \rbrace$,\hspace*{158px} $w((i,t))= b_i$\\\\
+Clearly cost of the $s-t$ cut = $\sum \limits_{i\in A}b_i + \sum \limits_{j\in B} a_j + \sum \limits_{i \in A, j\in B}p_{ij} = q^{'}(A,B)$.\\Thus, Solving image segmentation problem on the given pixel data is equivalent to solving minimum $s-t$ cut problem on  graph $G^{'}$.
+%------------------------------------------------
+
+\section{Solving Minimum Cut}
+Max- flow min-cut theorem states that value of minimum $s-t$ cut on a directed graph is equal to value of maximum $s-t$ flow on the same graph. Thus, value of minimum cut can be obtained by solving maximum flow using \textbf{Ford- Fulkerson} algorithm.\\\\
+To obtain the sets $A$ and $B$, start from vertex $s$ and do a DFS on the residual graph left after obtaining maximum flow on $G^{'}$. Set of vertices which are reachable from $s$, other than $s$ itself, constitute $A$ and remaining vertices (other than $t$) consitute $B$.
+
+\end{document}

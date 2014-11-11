@@ -1,0 +1,29 @@
+Input format is as under
+
+image should be a 2X 10 image
+it is describde in the extreme bottom of the code as under
+
+row0 data-> [1st pixel data, 2nd pixel data]
+row1 data-> [1st pixel data, 2nd pixel data]
+row2 data-> [1st pixel data, 2nd pixel data]
+row3 data-> [1st pixel data, 2nd pixel data]
+row4 data-> [1st pixel data, 2nd pixel data]
+row5 data-> [1st pixel data, 2nd pixel data]
+row6 data-> [1st pixel data, 2nd pixel data]
+row7 data-> [1st pixel data, 2nd pixel data]
+row8 data-> [1st pixel data, 2nd pixel data]
+row9 data-> [1st pixel data, 2nd pixel data]
+
+
+
+where each pixel data is as under
+[ai,bi,[p1,p2,p3,p4]]
+
+
+Output is in following form:
+
+for each pixel prgram outputs 
+
+"f" or "b" 
+
+telling whehter it belongs to foregroind or background
